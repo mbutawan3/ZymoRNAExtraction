@@ -1,0 +1,145 @@
+// {{{ 2 "SubmethodForwardDeclaration" ""
+private function PreHeatShaker(  ) void ;
+private function StageTipsChannels( sequence & io_seqTipInput, sequence & io_seqTipStagingDestination, sequence & io_seqTipStagingPattern ) void ;
+function OnAbort(  ) void ;
+// }} ""
+// {{{ 5 "OnAbort" "Begin"
+function OnAbort(  ) void {
+// }} ""
+// {{ 5 "OnAbort" "InitLocals"
+// }} ""
+// {{{ 1226 1 0 "7561e95e_bf72_4442_adf358aa96cf209b" "{C1F3C015-47B3-4514-9407-AC2E65043419}"
+TipCount::Write2(ML_STAR.MlStar1000ulHighVolumeTip, Translate("1000ulHighVolumeTip"), ML_STAR);
+// }} ""
+// {{{ 1227 1 0 "fa2901ce_ef40_4d9c_a681a46357dd55be" "{C1F3C015-47B3-4514-9407-AC2E65043419}"
+TipCount::Write2(ML_STAR.MlStar300ulStandardVolumeTip, Translate("300ulStandardVolumeTip"), ML_STAR);
+// }} ""
+// {{{ 5 "OnAbort" "End"
+}
+// }} ""
+// {{{ 5 "PreHeatShaker" "Begin"
+private function PreHeatShaker(  ) void {
+// }} ""
+// {{ 5 "PreHeatShaker" "InitLocals"
+// }} ""
+// {{ 1201 1 0 "bb810666_ade9_47fd_9dd4e261914d3b57" "{F07B0071-8EFC-11d4-A3BA-002035848439}"
+MECC::TraceComment(Translate("--------------------\n\nStarting to preheat shaker\n\n--------------------"));
+// }} ""
+// {{{ 1202 1 0 "8c8fcf2a_0701_415c_a832e5105ab9aaf2" "{7C4EF7A7-39BE-406a-897F-71F3A35B4093}"
+HHS_HELPER::Temp_Control_Start(mod_iShakerDeviceNumber, 55, 1);
+// }} ""
+// {{{ 1203 1 0 "fa81021c_25d9_434b_a9cd53965ed93f65" "{7C4EF7A7-39BE-406a-897F-71F3A35B4093}"
+HHS_HELPER::Temp_Control_Wait(mod_iShakerDeviceNumber);
+// }} ""
+// {{{ 5 "PreHeatShaker" "End"
+}
+// }} ""
+// {{{ 5 "StageTipsChannels" "Begin"
+private function StageTipsChannels( sequence & io_seqTipInput, sequence & io_seqTipStagingDestination, sequence & io_seqTipStagingPattern ) void {
+// }} ""
+private variable stc_iSeqCurrentPosition;
+private variable stc_sChannelVariable;
+private variable stc_sPositionID;
+private variable stc_sLabwareIDStaging;
+private sequence stc_seqTipStagingDestination;
+// {{ 5 "StageTipsChannels" "InitLocals"
+// }} ""
+// {{{ 1205 1 0 "8e59b608_204d_4557_9336399f241b0721" "{C1F3C015-47B3-4514-9407-AC2E65043419}"
+TrcFormatTrace12(Translate(""), Translate("StageTipsChannels"), 1, Translate(""), Translate(""), Translate(""), Translate(""), Translate(""), Translate(""), Translate(""), Translate(""), Translate(""), Translate(""), Translate(""), Translate(""));
+// }} ""
+// {{{ 1206 1 0 "3f47dd63_5337_41ce_bc2723910f78da4c" "{C1F3C015-47B3-4514-9407-AC2E65043419}"
+Util2::Debug::TraceSequence(io_seqTipStagingPattern);
+// }} ""
+// {{ 1207 1 0 "77f907ba_34e9_4232_bb08d6d85f922ac9" "{586C3429-F931-405f-9938-928E22C90BFA}"
+
+// }} ""
+// {{ 1208 1 0 "53f118a9_e8a0_4626_8a0cbdcbf46745a8" "{B31F353B-5D80-11d4-A5EB-0050DA737D89}"
+stc_iSeqCurrentPosition = io_seqTipStagingPattern.GetCurrentPosition();
+// }} ""
+// {{{ 1209 1 0 "880cbbb8_95e5_4a73_8c6845f1373314f9" "{C1F3C015-47B3-4514-9407-AC2E65043419}"
+SeqRemoveAll(stc_seqTipStagingDestination);
+// }} ""
+// {{{ 1210 1 0 "3a9abd80_aad9_4116_a4d4cc916802e1e4" "{C1F3C015-47B3-4514-9407-AC2E65043419}"
+stc_sLabwareIDStaging = SeqGetLabwareId(io_seqTipStagingDestination);
+// }} ""
+// {{ 1211 1 0 "fc366880_a2f3_40d6_9e0b2ec5934144ad" "{B31F3532-5D80-11d4-A5EB-0050DA737D89}"
+{
+io_seqTipStagingPattern.SetCurrentPosition(1);
+while (
+   (io_seqTipStagingPattern.GetCurrentPosition() > 0)
+)
+{
+AlignSequences(hslTrue, io_seqTipStagingPattern, 1, stc_seqTipStagingDestination, 1);
+// }} ""
+// {{{ 1212 1 0 "e2b859ed_3e17_4d87_b9f2f65bf4be2113" "{C1F3C015-47B3-4514-9407-AC2E65043419}"
+stc_sPositionID = SeqGetPositionId(io_seqTipStagingPattern);
+// }} ""
+// {{{ 1213 1 0 "56671819_0bec_4351_85d269c0d7de74b8" "{C1F3C015-47B3-4514-9407-AC2E65043419}"
+SeqAdd(stc_seqTipStagingDestination, stc_sLabwareIDStaging, stc_sPositionID);
+// }} ""
+// {{{ 1214 1 0 "c1e509bd_1f2d_48ff_b33b685c7682970e" "{C1F3C015-47B3-4514-9407-AC2E65043419}"
+SeqIncrement(io_seqTipStagingPattern, 1);
+// }} ""
+// {{ 1215 1 0 "fc366880_a2f3_40d6_9e0b2ec5934144ad" "{B31F3532-5D80-11d4-A5EB-0050DA737D89}"
+if (
+   (io_seqTipStagingPattern.GetCurrentPosition() > 0 && io_seqTipStagingPattern.GetMax() == 0 )
+)
+{ MECC::EndlessSequenceLoopWarning(GetFileName()); }
+
+}
+io_seqTipStagingPattern.SetMax(io_seqTipStagingPattern.GetTotal());
+stc_seqTipStagingDestination.SetMax(stc_seqTipStagingDestination.GetTotal());
+io_seqTipStagingPattern.SetCurrentPosition(1);
+stc_seqTipStagingDestination.SetCurrentPosition(1);
+}
+// }} ""
+// {{ 1216 1 0 "77f907ba_34e9_4232_bb08d6d85f922ac9" "{586C3429-F931-405f-9938-928E22C90BFA}"
+
+// }} ""
+// {{ 1217 1 0 "684c0f92_c0c3_4097_a1fc7ec1b3fe4a6c" "{586C3429-F931-405f-9938-928E22C90BFA}"
+
+// }} ""
+// {{ 1218 1 0 "61f2448f_b930_4467_a4a496eb83384494" "{B31F3532-5D80-11d4-A5EB-0050DA737D89}"
+{
+while (
+   (stc_seqTipStagingDestination.GetCurrentPosition() > 0)
+)
+{
+AlignSequences(hslTrue, stc_seqTipStagingDestination, 1);
+// }} ""
+// {{{ 1219 1 0 "dcf0a7d7_5bf6_43da_92cb5f7c42b069a5" "{7C4EF7A7-39BE-406a-897F-71F3A35B4093}"
+stc_sChannelVariable = NYSCF_UTILITYLIBRARY::GenerateChannelVariable(stc_seqTipStagingDestination);
+// }} ""
+// {{ 1220 1 0 "97ac9e4a_e6c6_413c_aaab0b666501dd5f" "ML_STAR:{541143FA-7FA2-11D3-AD85-0004ACB1DCB2}"
+{
+	variable arrRetValues[];
+	arrRetValues = ML_STAR._541143FA_7FA2_11D3_AD85_0004ACB1DCB2("97ac9e4a_e6c6_413c_aaab0b666501dd5f"); // TipPickUp
+}
+// }} ""
+// {{ 1221 1 0 "d8742cda_dd8a_4f0a_abd393e1cab9af32" "ML_STAR:{541143FC-7FA2-11D3-AD85-0004ACB1DCB2}"
+{
+	variable arrRetValues[];
+	arrRetValues = ML_STAR._541143FC_7FA2_11D3_AD85_0004ACB1DCB2("d8742cda_dd8a_4f0a_abd393e1cab9af32"); // TipEject
+}
+// }} ""
+// {{ 1222 1 0 "61f2448f_b930_4467_a4a496eb83384494" "{B31F3532-5D80-11d4-A5EB-0050DA737D89}"
+if (
+   (stc_seqTipStagingDestination.GetCurrentPosition() > 0 && stc_seqTipStagingDestination.GetMax() == 0 )
+)
+{ MECC::EndlessSequenceLoopWarning(GetFileName()); }
+
+}
+stc_seqTipStagingDestination.SetMax(stc_seqTipStagingDestination.GetTotal());
+}
+// }} ""
+// {{ 1223 1 0 "684c0f92_c0c3_4097_a1fc7ec1b3fe4a6c" "{586C3429-F931-405f-9938-928E22C90BFA}"
+
+// }} ""
+// {{ 1224 1 0 "d1b0366a_1f8b_4e7e_a541c6a1683d7b35" "{B31F353A-5D80-11d4-A5EB-0050DA737D89}"
+io_seqTipStagingPattern.SetCurrentPosition(stc_iSeqCurrentPosition);
+// }} ""
+// {{{ 5 "StageTipsChannels" "End"
+}
+// }} ""
+/* {{ 2 "SubmethodInsertLine" "" */ // }} ""
+// $$author=Matthew$$valid=0$$time=2022-11-10 13:56$$checksum=1bdc6069$$length=086$$
